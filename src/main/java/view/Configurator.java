@@ -1,22 +1,21 @@
+package view;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.*;
+import service.ConfiguratorHelper;
 
 
-
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Configurator extends Application {
 
@@ -45,47 +44,47 @@ public class Configurator extends Application {
 
 
         //addComponents
-        Processor Intel9900k = new Processor("Intel", "Core i7 9900k", 350, 85, 70);
-        Processor Ryzen3700x = new Processor("AMD", "Ryzen 3700x", 250, 75, 65);
-        Processor Ryzen3600 = new Processor("AMD", "Ryzen 3600", 150, 70, 55);
-        Processor Ryzen3800 = new Processor("AMD", "Ryzen 3800", 450, 89, 85);
-        Processor Intel9400f = new Processor("Intel", "Core i5 9400F", 170, 62, 50);
+        Processor intel9900k = new Processor(Producer.Intel, "Core i7 9900k", 350, 85, 70);
+        Processor ryzen3700x = new Processor(Producer.Amd, "Ryzen 3700x", 250, 75, 65);
+        Processor ryzen3600 = new Processor(Producer.Amd, "Ryzen 3600", 150, 70, 55);
+        Processor ryzen3800 = new Processor(Producer.Amd, "Ryzen 3800", 450, 89, 85);
+        Processor intel9400f = new Processor(Producer.Intel, "Core i5 9400F", 170, 62, 50);
         ArrayList<Processor> processors = new ArrayList<>();
-        processors.add(Intel9900k);
-        processors.add(Ryzen3700x);
-        processors.add(Ryzen3600);
-        processors.add(Ryzen3800);
-        processors.add(Intel9400f);
+        processors.add(intel9900k);
+        processors.add(ryzen3700x);
+        processors.add(ryzen3600);
+        processors.add(ryzen3800);
+        processors.add(intel9400f);
 
-        GraphicCard Rtx2060s = new GraphicCard("Nvidia", "Rtx 2060 Super 8 Gb", 450, 75, 220);
-        GraphicCard Xt5700 = new GraphicCard("AMD", "Xt5700 8Gb", 350, 61, 240);
-        GraphicCard Rtx2070s = new GraphicCard("Nvidia", "Rtx 2070 Super 8Gb", 650, 85, 260);
+        GraphicCard rtx2060s = new GraphicCard("Nvidia", "Rtx 2060 Super 8 Gb", 450, 75, 220);
+        GraphicCard xt5700 = new GraphicCard("AMD", "Xt5700 8Gb", 350, 61, 240);
+        GraphicCard rtx2070s = new GraphicCard("Nvidia", "Rtx 2070 Super 8Gb", 650, 85, 260);
         ArrayList<GraphicCard> graphicCards = new ArrayList<>();
-        graphicCards.add(Rtx2060s);
-        graphicCards.add(Xt5700);
-        graphicCards.add(Rtx2070s);
+        graphicCards.add(rtx2060s);
+        graphicCards.add(xt5700);
+        graphicCards.add(rtx2070s);
 
-        Ram GoodRamIdidium = new Ram("Good Ram", "IdidiumPro 3200 MHZ", 80, 3200);
-        Ram Ballistix = new Ram("Ballistix ", "BloodSport 3000 MHZ", 85, 3000);
-        Ram Corssair = new Ram("Corssair", "Vengance 2600 MHZ", 100, 2600);
+        Ram goodRamIdidium = new Ram("Good model.Ram", "IdidiumPro 3200 MHZ", 80, 3200);
+        Ram ballistix = new Ram("Ballistix ", "BloodSport 3000 MHZ", 85, 3000);
+        Ram corssair = new Ram("Corssair", "Vengance 2600 MHZ", 100, 2600);
         ArrayList<Ram> rams = new ArrayList<>();
-        rams.add(GoodRamIdidium);
-        rams.add(Ballistix);
-        rams.add(Corssair);
+        rams.add(goodRamIdidium);
+        rams.add(ballistix);
+        rams.add(corssair);
 
 
-        MotherBoard GigabyteB450 = new MotherBoard("Gigabyte", " Aorus B450", 100, true, false);
-        MotherBoard GamingPlus = new MotherBoard("Msi", " GamingPlus B450", 120, true, false);
-        MotherBoard GigabyteZ390 = new MotherBoard("Gigabyte", " Aorus z390", 150, false, true);
-        MotherBoard GigabyteZ370 = new MotherBoard("Asus", " Taichi z390", 250, false, true);
+        MotherBoard gigabyteB450 = new MotherBoard("Gigabyte", " Aorus B450", 100, Socket.Am );
+        MotherBoard gamingPlus = new MotherBoard("Msi", " GamingPlus B450", 120, Socket.Am);
+        MotherBoard gigabyteZ390 = new MotherBoard("Gigabyte", " Aorus z390", 150,Socket.Lga);
+        MotherBoard gigabyteZ370 = new MotherBoard("Asus", " Taichi z390", 250,Socket.Lga);
         ArrayList<MotherBoard> motherBoards = new ArrayList<>();
-        motherBoards.add(GigabyteB450);
-        motherBoards.add(GamingPlus);
-        motherBoards.add(GigabyteZ390);
-        motherBoards.add(GigabyteZ370);
+        motherBoards.add(gigabyteB450);
+        motherBoards.add(gamingPlus);
+        motherBoards.add(gigabyteZ390);
+        motherBoards.add(gigabyteZ370);
 
 
-        ListView<MotherBoard> motherBoardListView = new ListView();
+        ListView<MotherBoard> motherBoardListView = new ListView<MotherBoard>();
         Label choseMotherBoard = new Label("Wybierz plyte glowna");
         choseMotherBoard.setVisible(false);
         choseMotherBoard.setLayoutX(560);
@@ -110,11 +109,11 @@ public class Configurator extends Application {
         //Create stream
 
 
-        Label choseProcessor = new Label("Wybierz procesor z listy");
-        choseProcessor.setLayoutX(25);
-        choseProcessor.setLayoutY(10);
+        Label choseProcessorLabel = new Label("Wybierz procesor z listy");
+        choseProcessorLabel.setLayoutX(25);
+        choseProcessorLabel.setLayoutY(10);
 
-        ListView<Processor> processorListView = new ListView<>();
+        ListView<Processor> processorListView = new ListView<Processor>();
         processorListView.getItems().addAll(processors);
         processorListView.setLayoutX(20);
         processorListView.setLayoutY(30);
@@ -133,13 +132,13 @@ public class Configurator extends Application {
             }
         });
 
-        Label choseGraphicCard = new Label("Wybierz karte graficzna");
-        choseGraphicCard.setLayoutX(210);
-        choseGraphicCard.setLayoutY(10);
-        choseGraphicCard.setVisible(false);
+        Label choseGraphicCardLabel = new Label("Wybierz karte graficzna");
+        choseGraphicCardLabel.setLayoutX(210);
+        choseGraphicCardLabel.setLayoutY(10);
+        choseGraphicCardLabel.setVisible(false);
 
 
-        ListView<GraphicCard> graphicCardListView = new ListView<>();
+        ListView<GraphicCard> graphicCardListView = new ListView<GraphicCard>();
         graphicCardListView.getItems().addAll(graphicCards);
         graphicCardListView.setLayoutX(200);
         graphicCardListView.setLayoutY(30);
@@ -158,12 +157,12 @@ public class Configurator extends Application {
             }
         });
 
-        Label choseRam = new Label("Wybierz pamiec Ram");
-        choseRam.setLayoutX(390);
-        choseRam.setLayoutY(10);
-        choseRam.setVisible(false);
+        Label choseRamLabel = new Label("Wybierz pamiec model.Ram");
+        choseRamLabel.setLayoutX(390);
+        choseRamLabel.setLayoutY(10);
+        choseRamLabel.setVisible(false);
 
-        ListView ramListView = new ListView();
+        ListView ramListView = new ListView<ListView>();
         ramListView.getItems().addAll(rams);
         ramListView.setLayoutX(380);
         ramListView.setLayoutY(30);
@@ -186,15 +185,28 @@ public class Configurator extends Application {
         TableView configurationTable = new TableView();
         configurationTable.setEditable(true);
 
-        TableColumn processorColumn = new TableColumn("Procesor");
-        processorColumn.setMinWidth(150);
-        TableColumn graphicCardColumn = new TableColumn("Karta Graficzna");
-        graphicCardColumn.setMinWidth(150);
-        TableColumn ramColumn = new TableColumn("Pamiec Ram");
-        ramColumn.setMinWidth(150);
+        TableColumn processor = new TableColumn("processor");
+        processor.setCellValueFactory(new PropertyValueFactory<>("model"));
+
+
+
+        TableColumn graphicCardColumn = new TableColumn("graphicCard");
+        TableColumn ramColumn = new TableColumn("ram");
         TableColumn motherBoardColumn = new TableColumn("Plyta Glowna");
+        configurationTable.getColumns().addAll(processor, graphicCardColumn, ramColumn, motherBoardColumn);
+
         motherBoardColumn.setMinWidth(150);
-        configurationTable.getColumns().addAll(processorColumn, graphicCardColumn, ramColumn, motherBoardColumn);
+        ramColumn.setMinWidth(150);
+        processor.setMinWidth(150);
+        graphicCardColumn.setMinWidth(150);
+
+        configurationTable.getItems().addAll(Collections.singleton(configuratorHelper));
+
+
+
+
+//        configurationTable.getItems().add(new Processor(Producer.Intel, "Core i7 9900k", 350, 85, 70));
+//        processorColumn.setCellValueFactory(new PropertyValueFactory<>("getModel"));
         configurationTable.setLayoutX(200);
         configurationTable.setLayoutY(250);
         configurationTable.setMinHeight(100);
@@ -208,7 +220,7 @@ public class Configurator extends Application {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 graphicCardListView.setVisible(true);
-                choseGraphicCard.setVisible(true);
+                choseGraphicCardLabel.setVisible(true);
                 configuratorBar.setProgress(0.2);
                 configuratorHelper.setProcessor(processors.get(newValue.intValue()));
 //                System.out.println("Wybrano:" + processors.get(newValue.intValue()).getModel());
@@ -222,7 +234,7 @@ public class Configurator extends Application {
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 ramListView.setVisible(true);
                 configuratorBar.setProgress(0.4);
-                choseRam.setVisible(true);
+                choseRamLabel.setVisible(true);
                 configuratorHelper.setGraphicCard(graphicCards.get(newValue.intValue()));
             }
         });
@@ -234,14 +246,18 @@ public class Configurator extends Application {
                 configuratorBar.setProgress(0.6);
                 choseMotherBoard.setVisible(true);
 
-                if (configuratorHelper.getProcessor().getProducent() == "Intel") {
-                    List<MotherBoard> IntelMotherboards = motherBoards.stream().filter(g -> g.isIntelcompability()).collect(Collectors.toList());
-//                    for (MotherBoard s : IntelMotherboards)
+                if (configuratorHelper.getProcessor().getProducer().equals(Producer.Intel)) {
+                    List<MotherBoard> IntelMotherboards = motherBoards.stream()
+                            .filter(g -> g.getSocket().equals(Socket.Lga))
+                            .collect(Collectors.toList());
+//                    for (model.MotherBoard s : IntelMotherboards)
 //                        System.out.println(s.getModel());
                     motherBoardListView.getItems().addAll(IntelMotherboards);
 
-                } else if (configuratorHelper.getProcessor().getProducent() == "AMD") {
-                    List<MotherBoard> AmdMotherboards = motherBoards.stream().filter(g -> g.isAmdcompability()).collect(Collectors.toList());
+                } else if (configuratorHelper.getProcessor().getProducer().equals(Producer.Amd)) {
+                    List<MotherBoard> AmdMotherboards = motherBoards.stream().
+                            filter(g -> g.getSocket().equals(Socket.Am))
+                            .collect(Collectors.toList());
 
                     motherBoardListView.getItems().addAll(AmdMotherboards);
 
@@ -264,10 +280,10 @@ public class Configurator extends Application {
         group.getChildren().add(configuratorBar);
         group.getChildren().add(processorListView);
         group.getChildren().add(graphicCardListView);
-        group.getChildren().add(choseProcessor);
+        group.getChildren().add(choseProcessorLabel);
         group.getChildren().add(ramListView);
-        group.getChildren().add(choseGraphicCard);
-        group.getChildren().add(choseRam);
+        group.getChildren().add(choseGraphicCardLabel);
+        group.getChildren().add(choseRamLabel);
         group.getChildren().add(progressLabel);
         group.getChildren().add(motherBoardListView);
         group.getChildren().add(choseMotherBoard);

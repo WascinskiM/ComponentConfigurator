@@ -1,24 +1,26 @@
+package model;
+
 public class Processor {
-    private String producent;
+    private Producer producer;
     private String model;
-    private double prize;
+    private double price;
     private double efficiency;
     private double power;
 
-    public Processor(String producent, String model, double prize, double efficiency, double power) {
-        this.producent = producent;
+    public Processor(Producer producer, String model, double price, double efficiency, double power) {
+        this.producer = producer;
         this.model = model;
-        this.prize = prize;
+        this.price = price;
         this.efficiency = efficiency;
         this.power = power;
     }
 
-    public String getProducent() {
-        return producent;
+    public Producer getProducer() {
+        return producer;
     }
 
-    public void setProducent(String producent) {
-        this.producent = producent;
+    public void setProducer(Producer producer) {
+        this.producer = producer;
     }
 
     public String getModel() {
@@ -29,12 +31,12 @@ public class Processor {
         this.model = model;
     }
 
-    public double getPrize() {
-        return prize;
+    public double getPrice() {
+        return price;
     }
 
-    public void setPrize(double prize) {
-        this.prize = prize;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public double getEfficiency() {
@@ -55,8 +57,8 @@ public class Processor {
 
     @Override
     public String toString() {
-        return "Processor{" +
-                "producent='" + producent + '\'' +
+        return "model.Processor{" +
+                "producent='" + producer + '\'' +
                 ", model='" + model + '\'' +
                 '}';
     }

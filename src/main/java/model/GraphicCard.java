@@ -1,24 +1,26 @@
+package model;
+
 public class GraphicCard {
-    private String producent;
+    private String producer;
     private String model;
-    private double prize;
+    private double price;
     private double efficiency;
     private double power;
 
-    public GraphicCard(String producent, String model, double prize, double efficiency, double power) {
-        this.producent = producent;
+    public GraphicCard(String producer, String model, double price, double efficiency, double power) {
+        this.producer = producer;
         this.model = model;
-        this.prize = prize;
+        this.price = price;
         this.efficiency = efficiency;
         this.power = power;
     }
 
-    public String getProducent() {
-        return producent;
+    public String getProducer() {
+        return producer;
     }
 
-    public void setProducent(String producent) {
-        this.producent = producent;
+    public void setProducer(String producer) {
+        this.producer = producer;
     }
 
     public String getModel() {
@@ -29,12 +31,12 @@ public class GraphicCard {
         this.model = model;
     }
 
-    public double getPrize() {
-        return prize;
+    public double getPrice() {
+        return price;
     }
 
-    public void setPrize(double prize) {
-        this.prize = prize;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public double getEfficiency() {

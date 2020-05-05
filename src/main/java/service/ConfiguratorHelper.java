@@ -1,3 +1,9 @@
+package service;
+
+import model.GraphicCard;
+import model.Processor;
+import model.Ram;
+
 public class ConfiguratorHelper {
     private Ram ram;
     private Processor processor;
